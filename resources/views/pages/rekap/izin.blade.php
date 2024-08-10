@@ -113,7 +113,7 @@
                             <td class="text-center">
                                 @if ($p->file !== null)
                                     <button class="btn btn-primary" id="bukti-permission"
-                                        data-id="{{ $p->permissionId }}">Bukti</button>
+                                        data-file="{{ $p->file }}">Bukti</button>
                                 @else
                                     -
                                 @endif
@@ -126,3 +126,17 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    <script>
+        $(document).on("click", "#bukti-permission", function() {
+            let file = $(this).data("file");
+            Swal.fire({
+                imageUrl: `/storage/bukti/${file}`,
+                imageWidth: 800,
+                imageHeight: 800,
+                imageAlt: "A tall image"
+            });
+        })
+    </script>
+@endpush

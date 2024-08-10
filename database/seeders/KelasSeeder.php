@@ -16,36 +16,43 @@ class KelasSeeder extends Seeder
                     "name" => "Mts - 7",
                     "created_at" => now(),
                     "updated_at" => now(),
+                    "deleted_at" => null
                 ],
                 [
                     "name" => "Mts - 8",
                     "created_at" => now(),
                     "updated_at" => now(),
+                    "deleted_at" => null
                 ],
                 [
                     "name" => "Mts - 9",
                     "created_at" => now(),
                     "updated_at" => now(),
+                    "deleted_at" => null
                 ],
                 [
                     "name" => "MA - 10",
                     "created_at" => now(),
                     "updated_at" => now(),
+                    "deleted_at" => null
                 ],
                 [
                     "name" => "MA - 11",
                     "created_at" => now(),
                     "updated_at" => now(),
+                    "deleted_at" => null
                 ],
                 [
                     "name" => "MA - 12",
                     "created_at" => now(),
                     "updated_at" => now(),
+                    "deleted_at" => null
                 ],
                 [
                     "name" => "Ma'had Aly",
                     "created_at" => now(),
                     "updated_at" => now(),
+                    "deleted_at" => null
                 ],
             ]
         );

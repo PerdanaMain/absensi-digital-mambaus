@@ -1,21 +1,22 @@
 <?php
 
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\GuruController;
-use App\Http\Controllers\InputMatpelSantriController;
-use App\Http\Controllers\MadinController;
-use App\Http\Controllers\MandiriController;
-use App\Http\Controllers\MatpelController;
-use App\Http\Controllers\PengurusController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\RekapAbsensiController;
-use App\Http\Controllers\RekapIzinController;
-use App\Http\Controllers\RekapMandiriController;
-use App\Http\Controllers\SantriController;
-use App\Http\Controllers\SekolahController;
-use App\Http\Controllers\SubmissionController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\GuruController;
+use App\Http\Controllers\KelasController;
+use App\Http\Controllers\MadinController;
+use App\Http\Controllers\MatpelController;
+use App\Http\Controllers\SantriController;
+use App\Http\Controllers\MandiriController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SekolahController;
+use App\Http\Controllers\PengurusController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\RekapIzinController;
+use App\Http\Controllers\SubmissionController;
+use App\Http\Controllers\RekapAbsensiController;
+use App\Http\Controllers\RekapMandiriController;
+use App\Http\Controllers\InputMatpelSantriController;
 
 /**
  * ==========================================================================================================
@@ -144,6 +145,15 @@ Route::prefix("/")->middleware('auth')->group(function () {
         Route::post("/", [InputMatpelSantriController::class, 'store'])->name('inputMatpelSantri.store');
         Route::put("/{id}", [InputMatpelSantriController::class, 'update'])->name('inputMatpelSantri.update');
         Route::delete("/{id}", [InputMatpelSantriController::class, 'destroy'])->name('inputMatpelSantri.destroy');
+    });
+
+    Route::prefix("kelas")->middleware("role:Admin")->group(function () {
+        Route::get("/", [KelasController::class, 'index'])->name('kelas.index');
+        Route::get("/template", [KelasController::class, 'template'])->name('kelas.template');
+        Route::post("/", [KelasController::class, 'store'])->name('kelas.store');
+        Route::post("/import", [KelasController::class, 'import'])->name('kelas.import');
+        Route::put("/{id}", [KelasController::class, 'update'])->name('kelas.update');
+        Route::delete("/{id}", [KelasController::class, 'destroy'])->name('kelas.destroy');
     });
 
     /**

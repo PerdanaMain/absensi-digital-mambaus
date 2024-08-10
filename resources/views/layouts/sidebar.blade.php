@@ -127,6 +127,11 @@
                             <div>Matpel Santri</div>
                         </a>
                     </li>
+                    <li class="menu-item {{ Route::currentRouteName() == 'kelas.index' ? 'active' : '' }}">
+                        <a href="{{ route('kelas.index') }}" class="menu-link">
+                            <div>Kelas</div>
+                        </a>
+                    </li>
                 </ul>
             </li>
         @endif
