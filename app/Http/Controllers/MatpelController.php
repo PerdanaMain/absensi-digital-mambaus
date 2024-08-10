@@ -62,8 +62,9 @@ class MatpelController extends Controller
                     Validator::make([
                         'name' => $value[0],
                         'kelas' => $value[3],
-                        'type' => $value[4],
-                        'guru' => $value[6],
+                        "semester" => $value[4],
+                        'type' => $value[5],
+                        'guru' => $value[7],
                     ], [
                         'name' => 'required',
                         'type' => 'required',
@@ -71,8 +72,8 @@ class MatpelController extends Controller
                         'kelas' => 'required',
                     ])->validate();
 
-                    $type = Type::where('name', 'like', '%' . $value[4] . '%')->first();
-                    $guru = Guru::where('name', 'like', '%' . $value[6] . '%')->first();
+                    $type = Type::where('name', 'like', '%' . $value[5] . '%')->first();
+                    $guru = Guru::where('name', 'like', '%' . $value[7] . '%')->first();
 
                     $searchValue = strtolower(preg_replace('/\s+/', '', $value[3]));
                     $kelas = Kelas::where(DB::raw('LOWER(REPLACE(name, " ", ""))'), 'like', '%' . $searchValue . '%')->first();
@@ -82,9 +83,10 @@ class MatpelController extends Controller
                         'typeId' => $type->typeId,
                         'guruId' => $guru->guruId,
                         'kelasId' => $kelas->kelasId,
+                        "semester" => $value[4],
                         "day" => $value[1],
                         "time" => $value[2],
-                        "description" => $value[5],
+                        "description" => $value[6],
                     ]);
                 }
             }
@@ -102,6 +104,7 @@ class MatpelController extends Controller
                 'typeId' => 'required',
                 'guruId' => 'required',
                 'kelasId' => 'required',
+                "semester" => 'required',
             ]);
 
             $matpel = Matpel::create([
@@ -109,6 +112,7 @@ class MatpelController extends Controller
                 'typeId' => (int) $request->typeId,
                 'guruId' => (int) $request->guruId,
                 'kelasId' => (int) $request->kelasId,
+                "semester" => $request->semester,
                 "day" => $request->day,
                 "time" => $request->time,
                 "description" => $request->description,
@@ -135,6 +139,7 @@ class MatpelController extends Controller
                 'typeId' => (int) $request->typeId,
                 'guruId' => (int) $request->guruId,
                 'kelasId' => (int) $request->kelasId,
+                "semester" => $request->semester,
                 "day" => $request->day,
                 "time" => $request->time,
                 "description" => $request->description,

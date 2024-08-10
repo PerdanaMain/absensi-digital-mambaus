@@ -77,7 +77,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Save changes</button>
+                            <button type="submit" class="btn btn-primary">Save</button>
                         </div>
                     </form>
 
@@ -114,7 +114,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Save changes</button>
+                            <button type="submit" class="btn btn-primary">Save</button>
                         </div>
                     </form>
 
@@ -168,7 +168,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Save changes</button>
+                            <button type="submit" class="btn btn-primary">Save</button>
                         </div>
                     </form>
 
@@ -198,7 +198,7 @@
                             <td style="world-wrap:break-world;">{{ $a->description }}</td>
                             <td>{{ $a->type->name }}</td>
                             <td>{{ $a->status->name }}</td>
-                            <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d', $a->date)->format('jS F Y') }}</td>
+                            <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d', $a->date)->locale('id-ID')->translatedFormat('d F Y') }}
                             <td>{{ $a->santri->pengurus->name }}</td>
                             <td>
                                 <div class="dropdown">
@@ -288,7 +288,7 @@
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary"
                                                 data-bs-dismiss="modal">Close</button>
-                                            <button type="submit" class="btn btn-primary">Save changes</button>
+                                            <button type="submit" class="btn btn-primary">Save</button>
                                         </div>
                                     </form>
 

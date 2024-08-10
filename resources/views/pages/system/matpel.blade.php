@@ -86,6 +86,19 @@
 
                                 <div class="col-md-12 col-sm-12">
                                     <div class="mb-3">
+                                        <label for="semester" class="form-label">Semester <span
+                                                style="color:red">*</span></label>
+                                        <select name="semester" id="semester" class="form-select select2">
+                                            <option selected hidden>=== Pilih Semester ===</option>
+                                            <option value="Semester 1">Semester 1</option>
+                                            <option value="Semester 2">Semester 2</option>
+
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12 col-sm-12">
+                                    <div class="mb-3">
                                         <label for="description" class="form-label">
                                             Deskripsi Mata Pelajaran
                                         </label>
@@ -165,6 +178,7 @@
                         <th>Nama Guru</th>
                         <th>Tipe</th>
                         <th>Kelas</th>
+                        <th>Semester</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -179,6 +193,7 @@
                             <td>{{ $m->guru->name }}</td>
                             <td>{{ $m->type->name }}</td>
                             <td>{{ $m->kelas->name }}</td>
+                            <td>{{ $m->semester }}</td>
                             <td>
                                 <div class="dropdown">
                                     <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
@@ -236,6 +251,9 @@
                                                     </p>
                                                     <p>
                                                         <b>Tipe :</b> {{ $m->type->name }}
+                                                    </p>
+                                                    <p>
+                                                        <b>Semester :</b> {{ $m->semester }}
                                                     </p>
                                                     <p>
                                                         <b>Nama Guru :</b> {{ $m->guru->name }}
@@ -321,6 +339,8 @@
                                                     </div>
                                                 </div>
 
+
+
                                                 <div class="col-md-6 col-sm-12">
                                                     <div class="mb-3">
                                                         <label for="typeId" class="form-label">Tipe Mata Pelajaran <span
@@ -332,6 +352,20 @@
                                                                 <option value="{{ $t->typeId }}">{{ $t->name }}
                                                                 </option>
                                                             @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-12 col-sm-12">
+                                                    <div class="mb-3">
+                                                        <label for="semester" class="form-label">Semester <span
+                                                                style="color:red">*</span></label>
+                                                        <select name="semester" id="semester" class="form-select ">
+                                                            <option selected hidden value="{{ $m->semester }}">
+                                                                {{ $m->semester }}</option>
+                                                            <option value="Semester 1">Semester 1</option>
+                                                            <option value="Semester 2">Semester 2</option>
+
                                                         </select>
                                                     </div>
                                                 </div>

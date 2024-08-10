@@ -15,6 +15,7 @@ return new class extends Migration
             $table->unsignedBigInteger("guruId");
             $table->string("name");
             $table->string("day")->nullable();
+            $table->string("semester")->nullable();
             $table->time("time")->nullable();
             $table->string("description")->nullable();
             $table->timestamps();

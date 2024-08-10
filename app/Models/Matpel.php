@@ -17,6 +17,7 @@ class Matpel extends Model
         'typeId',
         'guruId',
         'kelasId',
+        "semester",
         'day',
         'time',
     ];

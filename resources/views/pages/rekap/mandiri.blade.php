@@ -101,7 +101,7 @@
                             <td>{{ $a->type->name }}</td>
                             <td>{{ $a->status->name }}</td>
                             <td>{{ $a->santri->pengurus->name }}</td>
-                            <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d', $a->date)->format('jS F Y') }}</td>
+                            <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d', $a->date)->locale('id-ID')->translatedFormat('d F Y') }}
                         </tr>
                     @endforeach
                 </tbody>
