@@ -190,7 +190,7 @@
                             <td>{{ $m->day }}</td>
                             <td>{{ $m->time == null ? '-' : DateTime::createFromFormat('H:i:s', $m->time)->format('g:i A') }}
                             </td>
-                            <td>{{ $m->guru->name }}</td>
+                            <td>{{ $m->guru->name ?? 'Belum Ada' }}</td>
                             <td>{{ $m->type->name }}</td>
                             <td>{{ $m->kelas->name }}</td>
                             <td>{{ $m->semester }}</td>
@@ -256,7 +256,7 @@
                                                         <b>Semester :</b> {{ $m->semester }}
                                                     </p>
                                                     <p>
-                                                        <b>Nama Guru :</b> {{ $m->guru->name }}
+                                                        <b>Nama Guru :</b> {{ $m->guru->name ?? 'Belum Ada' }}
                                                     </p>
                                                 </div>
                                             </div>
@@ -387,7 +387,7 @@
                                                                 style="color:red">*</span></label>
                                                         <select name="guruId" id="guruId" class="form-select">
                                                             <option selected hidden value="{{ $m->guruId }}">
-                                                                {{ $m->guru->name }}</option>
+                                                                {{ $m->guru->name ?? 'Belum Ada' }}</option>
                                                             @foreach ($guru as $g)
                                                                 <option value="{{ $g->guruId }}">{{ $g->name }}
                                                                 </option>

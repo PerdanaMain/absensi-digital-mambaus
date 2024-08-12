@@ -187,7 +187,7 @@
                             <td>{{ $key + 1 }}</td>
                             <td>{{ $s->name }}</td>
                             <td>{{ $s->age }}</td>
-                            <td>{{ $s->pengurus->name }}</td>
+                            <td>{{ $s->pengurus->name ?? 'Belum Ada' }}</td>
                             <td>{{ $s->wali->name }}</td>
                             <td>
                                 <div class="dropdown">
@@ -250,7 +250,7 @@
                                                         <b>No Telpon Wali :</b> {{ $s->wali->phone }}
                                                     </p>
                                                     <p>
-                                                        <b>Nama Pengurus :</b> {{ $s->pengurus->name }}
+                                                        <b>Nama Pengurus :</b> {{ $s->pengurus->name ?? 'Belum Ada' }}
                                                     </p>
                                                 </div>
                                             </div>
@@ -342,7 +342,7 @@
                                                                 style="color:red">*</span></label>
                                                         <select name="pengurusId" id="pengurusId" class="form-select">
                                                             <option selected hidden value="{{ $s->pengurusId }}">
-                                                                {{ $s->pengurus->name }}
+                                                                {{ $s->pengurus->name ?? 'Belum Ada' }}
                                                             </option>
                                                             @foreach ($pengurus as $p)
                                                                 <option value="{{ $p->pengurusId }}">{{ $p->name }}

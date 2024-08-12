@@ -21,9 +21,9 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign("kelasId")->references("kelasId")->on("kelas");
-            $table->foreign("typeId")->references("typeId")->on("types");
-            $table->foreign("guruId")->references("guruId")->on("gurus");
+            $table->foreign("kelasId")->references("kelasId")->on("kelas")->onDelete("cascade");
+            $table->foreign("typeId")->references("typeId")->on("types")->onDelete("cascade");
+            $table->foreign("guruId")->references("guruId")->on("gurus")->onDelete("cascade");
         });
     }
 

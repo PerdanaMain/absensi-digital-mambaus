@@ -14,7 +14,7 @@ class Guru extends Model
     protected $table = 'gurus';
     protected $primaryKey = 'guruId';
     protected $fillable = [
-        'userId', 'name', 'address', 'phone', "created_at", "updated_at",
+        'userId', 'name', 'address', 'phone', "created_at", "updated_at", "deleted_at",
     ];
 
     public function user(): BelongsTo

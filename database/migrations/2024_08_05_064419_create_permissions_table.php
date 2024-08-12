@@ -18,7 +18,7 @@ return new class extends Migration
             $table->text("file")->nullable();
             $table->timestamps();
 
-            $table->foreign("santriId")->references("santriId")->on("santris");
+            $table->foreign("santriId")->references("santriId")->on("santris")->onDelete("cascade");
         });
     }
 

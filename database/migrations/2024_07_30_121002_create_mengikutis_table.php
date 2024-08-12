@@ -14,8 +14,8 @@ return new class extends Migration
             $table->unsignedBigInteger("matpelId");
             $table->timestamps();
 
-            $table->foreign("santriId")->references("santriId")->on("santris");
-            $table->foreign("matpelId")->references("matpelId")->on("matpels");
+            $table->foreign("santriId")->references("santriId")->on("santris")->onDelete("cascade");
+            $table->foreign("matpelId")->references("matpelId")->on("matpels")->onDelete("cascade");
         });
     }
 

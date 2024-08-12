@@ -19,10 +19,10 @@ return new class extends Migration
             $table->text("description")->nullable();
             $table->timestamps();
 
-            $table->foreign("santriId")->references("santriId")->on("santris");
-            $table->foreign("matpelId")->references("matpelId")->on("matpels");
-            $table->foreign("statusId")->references("statusId")->on("statuses");
-            $table->foreign("typeId")->references("typeId")->on("types");
+            $table->foreign("santriId")->references("santriId")->on("santris")->onDelete("cascade");
+            $table->foreign("matpelId")->references("matpelId")->on("matpels")->onDelete("cascade");
+            $table->foreign("statusId")->references("statusId")->on("statuses")->onDelete("cascade");
+            $table->foreign("typeId")->references("typeId")->on("types")->onDelete("cascade");
         });
     }
     public function down(): void

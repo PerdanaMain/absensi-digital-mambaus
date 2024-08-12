@@ -20,8 +20,8 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign("pengurusId")->references("pengurusId")->on("penguruses");
-            $table->foreign("waliId")->references("waliId")->on("walis");
+            $table->foreign("pengurusId")->references("pengurusId")->on("penguruses")->onDelete("cascade");
+            $table->foreign("waliId")->references("waliId")->on("walis")->onDelete("cascade");
         });
     }
 

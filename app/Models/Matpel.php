@@ -20,6 +20,9 @@ class Matpel extends Model
         "semester",
         'day',
         'time',
+        "created_at",
+        "updated_at",
+        "deleted_at",
     ];
 
     public function type(): BelongsTo
