@@ -235,8 +235,10 @@ class SekolahController extends Controller
             $request->validate([
                 "matpelId" => "required",
                 "santriId" => "required",
-                "statusId" => "required",
+                "statusId" => "required|numeric",
                 "tglAbsensi" => "required",
+            ], [
+                "statusId.numeric" => "Mohon isikan status kehadiran",
             ]);
 
             $check = Absensi::where([

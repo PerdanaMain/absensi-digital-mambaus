@@ -22,7 +22,7 @@
                 <span style="margin: 20px 0px 20px 0px">gunakan username dan password yang terdaftar</span>
                 <input type="text" placeholder="Username" name="username">
                 <input type="password" placeholder="Password" name="password">
-                <a role="button" id="passwordButton" type="button" style="cursor: pointer;">Forget Your Password?</a>
+                <a href="#">Forget Your Password?</a>
                 <button type="submit">Sign In</button>
             </form>
         </div>
@@ -38,49 +38,6 @@
             </div>
         </div>
     </div>
-
-    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-    <script>
-        $(document).on("click", "#passwordButton", function() {
-            Swal.fire({
-                title: "Masukkan username anda yang terdaftar",
-                input: "text",
-                inputAttributes: {
-                    autocapitalize: "off"
-                },
-                showCancelButton: true,
-                confirmButtonText: "Ajukan",
-                showLoaderOnConfirm: true,
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $.ajax({
-                        url: "/changePassword/" + result.value,
-                        type: 'PUT',
-                        data: {
-                            _token: $("input[name=_token]").val(),
-                        },
-                        success: function(response) {
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'Success...',
-                                text: response.message,
-                            })
-                        },
-                        error: function(err) {
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Oops...',
-                                text: err.responseJSON.message,
-                            })
-                        }
-                    });
-                }
-            });
-        })
-    </script>
 
     @if ($errors->any())
         @foreach ($errors->all() as $error)

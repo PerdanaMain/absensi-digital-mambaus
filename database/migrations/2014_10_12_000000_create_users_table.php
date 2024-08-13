@@ -14,7 +14,7 @@ return new class extends Migration
             $table->string('username')->unique();
             $table->string('password');
             $table->text('image')->nullable();
-            $table->rememberToken();
+            $table->boolean("isForgetPassword")->default(false);
             $table->timestamps();
             $table->softDeletes();
 

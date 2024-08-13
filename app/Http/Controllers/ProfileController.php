@@ -59,6 +59,46 @@ class ProfileController extends Controller
         );
     }
 
+    public function resetIndex()
+    {
+        $users = User::with([
+            "role",
+            "guru",
+            "pengurus",
+            "wali",
+        ])
+            ->where("isForgetPassword", true)->get();
+
+        return view(
+            'pages.system.resetPassword',
+            compact(
+                "users"
+            )
+        );
+    }
+
+    public function resetPassword($id)
+    {
+        try {
+            $user = User::where("userId", $id)
+                ->update([
+                    "isForgetPassword" => false,
+                    "password" => Hash::make("12345"),
+                ]);
+
+            return response()->json([
+                "status" => true,
+                "message" => "Password Berhasil Direset",
+                "data" => $user,
+            ])->setStatusCode(200);
+        } catch (\Throwable $th) {
+            return response()->json([
+                "status" => false,
+                "message" => $th->getMessage(),
+            ])->setStatusCode(500);
+        }
+    }
+
     public function update(Request $request, $id)
     {
         try {

@@ -24,6 +24,7 @@ use Illuminate\Support\Facades\Route;
  * ==========================================================================================================
  */
 Route::get('/', [AuthController::class, 'index'])->name('home');
+Route::put('/changePassword/{username}', [AuthController::class, 'changePassword'])->name('changePassword');
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::delete('/logout', [AuthController::class, 'logout'])->name('logout');
 
@@ -167,5 +168,10 @@ Route::prefix("/")->middleware('auth')->group(function () {
         Route::get("/", [ProfileController::class, 'index'])->name('profile.index');
         Route::put("/{id}", [ProfileController::class, 'update'])->name('profile.update');
         Route::put("/change-password/{id}", [ProfileController::class, 'updatePassword'])->name('profile.changePassword');
+    });
+
+    Route::prefix("reset-password")->group(function () {
+        Route::get("/", [ProfileController::class, "resetIndex"])->name("reset.index");
+        Route::put("/{id}", [ProfileController::class, "resetPassword"])->name("reset.update");
     });
 });

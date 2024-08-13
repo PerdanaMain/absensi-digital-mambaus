@@ -132,6 +132,11 @@
                             <div>Kelas</div>
                         </a>
                     </li>
+                    <li class="menu-item {{ Route::currentRouteName() == 'reset.index' ? 'active' : '' }}">
+                        <a href="{{ route('reset.index') }}" class="menu-link">
+                            <div>Reset Password</div>
+                        </a>
+                    </li>
                 </ul>
             </li>
         @endif

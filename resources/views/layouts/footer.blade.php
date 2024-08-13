@@ -6,9 +6,8 @@
                 <script>
                     document.write(new Date().getFullYear());
                 </script>
-                , Developed By <a href="https://www.mbs2blitar.sch.id/" target="_blank" class="fw-semibold">PP. Mamba'us
-                    Sholihin
-                    2 Blitar</a>
+                , Developed By <a href="https://www.upnjatim.ac.id/" target="_blank" class="fw-semibold">UPN Veteran Jawa
+                    Timur</a>
             </div>
 
         </div>

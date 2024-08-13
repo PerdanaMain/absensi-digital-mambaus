@@ -21,6 +21,7 @@ class User extends Authenticatable
         'roleId',
         'image',
         'password',
+        "isForgetPassword",
     ];
 
     public function role(): BelongsTo

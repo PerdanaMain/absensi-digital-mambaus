@@ -15,6 +15,41 @@ class AuthController extends Controller
         return view('pages.welcome');
     }
 
+    public function changePassword(Request $request, $username)
+    {
+        try {
+            $check = User::where("username", $username)->first();
+
+            if (!$check) {
+                return response()->json([
+                    "status" => false,
+                    "message" => "Username tidak ditemukan",
+                ])->setStatusCode(404);
+            }
+
+            if ($check->isForgetPassword) {
+                return response()->json([
+                    "status" => false,
+                    "message" => "Maaf, Anda telah mengajukan lupa password dan mohon menunggu konfirmasi admin",
+                ])->setStatusCode(404);
+            }
+
+            $user = User::where("userId", $check->userId)->update([
+                "isForgetPassword" => true,
+            ]);
+
+            return response()->json([
+                "status" => true,
+                "message" => "Pengajuan lupa password berhasil diajukan mohon menunggu konfirmasi admin",
+            ])->setStatusCode(200);
+        } catch (\Throwable $th) {
+            return response()->json([
+                "status" => false,
+                "message" => $th->getMessage(),
+            ])->setStatusCode(500);
+        }
+    }
+
     public function login(Request $request)
     {
         try {
