@@ -56,12 +56,6 @@
                                         <label for="statusId" class="form-label">Kehadiran <span
                                                 style="color:red">*</span></label>
                                         <select name="statusId" id="statusId" class="form-select select2">
-                                            <option selected hidden>=== Pilih Kehadiran ===</option>
-                                            @foreach ($statuses as $s)
-                                                <option value="{{ $s->statusId }}">
-                                                    {{ $s->name }}
-                                                </option>
-                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
@@ -74,8 +68,8 @@
                                             id="flatpickr-date" name="tglAbsensi" />
                                     </div>
                                 </div>
-
                             </div>
+                            <span id="santri-msg" style="color:red;font-style:italic;"></span>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -224,7 +218,27 @@
                             <td>{{ $a->santri->name }}</td>
                             <td>{{ $a->matpel->name . ' - ' . $a->matpel->kelas->name }}</td>
                             <td>{{ $a->type->name }}</td>
-                            <td>{{ $a->status->name }}</td>
+                            <td class="text-center">
+                                @switch($a->statusId)
+                                    @case(1)
+                                        <span class="badge rounded-pill bg-success">{{ $a->status->name }}</span>
+                                    @break
+
+                                    @case(2)
+                                        <span class="badge rounded-pill bg-warning">{{ $a->status->name }}</span>
+                                    @break
+
+                                    @case(3)
+                                        <span class="badge rounded-pill bg-warning">{{ $a->status->name }}</span>
+                                    @break
+
+                                    @case(4)
+                                        <span class="badge rounded-pill bg-danger">{{ $a->status->name }}</span>
+                                    @break
+
+                                    @default
+                                @endswitch
+                            </td>
                             <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d', $a->date)->locale('id-ID')->translatedFormat('d F Y') }}
                             <td>
                                 <div class="dropdown">
@@ -336,6 +350,79 @@
     <script>
         $(document).ready(function() {
             $("#exportMatpel").hide();
+        });
+
+        $(document).on("change", "#flatpickr-date", function() {
+            let santriId = $("#santriId").val();
+            let date = $(this).val();
+            $("#statusId").empty();
+
+            $.ajax({
+                type: "GET",
+                url: "/perizinan/check/" + santriId,
+                success: function(res) {
+                    $("#statusId").empty();
+                    let date2 = res.data.permission.tglKeluar;
+
+                    if (date > date2) {
+                        $.each(res.data.status, function(key, value) {
+                            $("#statusId").append('<option value="' + value.statusId +
+                                '">' + value.name +
+                                '</option>');
+                        });
+                    } else {
+                        $("#statusId").append(
+                            '<option selected hidden>=== Pilih Kehadiran ===</option>');
+                        $.each(res.data.statuses, function(key, value) {
+                            $("#statusId").append('<option value="' + value.statusId +
+                                '">' + value.name +
+                                '</option>');
+                        });
+                    }
+
+                },
+                error: function(err) {
+                    $("#statusId").append(
+                        '<option selected hidden>=== Pilih Kehadiran ===</option>');
+                    $.each(err.responseJSON.data.statuses, function(key, value) {
+                        $("#statusId").append('<option value="' + value.statusId +
+                            '">' + value.name +
+                            '</option>');
+                    });
+                }
+            })
+
+        })
+
+        $(document).on("change", "#santriId", function() {
+            let santriId = $(this).val();
+            $("#santri-msg").text("");
+            $("#statusId").empty();
+            $.ajax({
+                type: "GET",
+                url: "/perizinan/check/" + santriId,
+                success: function(res) {
+                    $("#santri-msg").text("*" + res.message);
+
+                    $("#statusId").empty();
+                    $.each(res.data.status, function(key, value) {
+                        $("#statusId").append('<option value="' + value.statusId +
+                            '">' + value.name +
+                            '</option>');
+                    });
+                },
+                error: function(err) {
+                    $("#statusId").empty();
+                    $("#statusId").append(
+                        '<option selected hidden>=== Pilih Kehadiran ===</option>');
+                    $.each(err.responseJSON.data.status, function(key, value) {
+                        $("#statusId").append('<option value="' + value.statusId +
+                            '">' + value.name +
+                            '</option>');
+                    });
+                    $("#santri-msg").text("");
+                }
+            })
         });
 
         $(document).on("change", "#matpelId", function() {

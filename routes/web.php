@@ -1,22 +1,22 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\GuruController;
+use App\Http\Controllers\InputMatpelSantriController;
 use App\Http\Controllers\KelasController;
 use App\Http\Controllers\MadinController;
-use App\Http\Controllers\MatpelController;
-use App\Http\Controllers\SantriController;
 use App\Http\Controllers\MandiriController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\SekolahController;
+use App\Http\Controllers\MatpelController;
 use App\Http\Controllers\PengurusController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\RekapIzinController;
-use App\Http\Controllers\SubmissionController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RekapAbsensiController;
+use App\Http\Controllers\RekapIzinController;
 use App\Http\Controllers\RekapMandiriController;
-use App\Http\Controllers\InputMatpelSantriController;
+use App\Http\Controllers\SantriController;
+use App\Http\Controllers\SekolahController;
+use App\Http\Controllers\SubmissionController;
+use Illuminate\Support\Facades\Route;
 
 /**
  * ==========================================================================================================
@@ -70,6 +70,7 @@ Route::prefix("/")->middleware('auth')->group(function () {
 
     Route::prefix("perizinan")->middleware("role:Admin,Pengurus")->group(function () {
         Route::get("/", [SubmissionController::class, 'index'])->name('perizinan.index');
+        Route::get("/check/{id}", [SubmissionController::class, 'check'])->name('perizinan.check');
         Route::post("/", [SubmissionController::class, 'store'])->name('perizinan.store');
         Route::put("/update-status/{id}", [SubmissionController::class, 'updateStatus'])->name('perizinan.updateStatus');
         Route::put("/{id}", [SubmissionController::class, 'update'])->name('perizinan.update');

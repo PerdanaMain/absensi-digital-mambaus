@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Pengurus;
 use App\Models\Permission;
 use App\Models\Santri;
+use App\Models\Status;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -44,6 +45,51 @@ class SubmissionController extends Controller
         );
     }
 
+    public function check(Request $request, $id)
+    {
+        try {
+            $status = [];
+            $permission = Permission::where("santriId", $id)
+                ->where("isComback", false)
+                ->orderBy("permissionId", "desc")
+                ->first();
+
+            if ($permission) {
+                $status = Status::where("statusId", 2)->get();
+                $statuses = Status::whereIn("statusId", [1, 2, 3, 4])->get();
+
+                return response()->json([
+                    "status" => true,
+                    "data" => [
+                        "permission" => $permission,
+                        "status" => $status,
+                        "statuses" => $statuses,
+                    ],
+                    "message" => "Santri, " . $permission->santri->name . " memiliki izin dan belum kembali sejak " . \Carbon\Carbon::createFromFormat('Y-m-d', $permission->tglKeluar)->locale('id-ID')->translatedFormat('d F Y'),
+                ])->setStatusCode(200);
+
+            } else {
+                $status = Status::whereIn("statusId", [1, 2, 3, 4])->get();
+
+                return response()->json([
+                    "status" => true,
+                    "data" => [
+                        "permission" => $permission,
+                        "status" => $status,
+                        "statuses" => $status,
+                    ],
+                    "message" => "Santri, tidak memiliki izin",
+                ])->setStatusCode(404);
+            }
+
+        } catch (\Throwable $th) {
+            return response()->json([
+                "status" => false,
+                "message" => $th->getMessage(),
+            ])->setStatusCode(500);
+        }
+    }
+
     public function store(Request $request)
     {
         try {
@@ -55,10 +101,14 @@ class SubmissionController extends Controller
                 "bukti" => "mimes:jpg,jpeg,png",
             ]);
             $user = Auth::user();
-            $santri = Santri::find($request->santriId);
-            $permission = Permission::where("santriId", $request->santriId)
+            $santriId = (int) $request->santriId;
+            $santri = Santri::find($santriId);
+
+            $permission = Permission::where("santriId", $santriId)
                 ->where("tglKeluar", $request->tglKeluar)
                 ->first();
+
+            // dd($santri->toArray(), $santriId, $permission->toArray());
 
             if ($permission) {
                 return back()->with("error", "Santri " . $santri->name . " sudah memiliki izin pada tanggal " . $request->tglKeluar);
@@ -70,7 +120,7 @@ class SubmissionController extends Controller
                 $file->storeAs("public/bukti/", $fileName);
 
                 Permission::create([
-                    "santriId" => $santri->santriId,
+                    "santriId" => $santriId,
                     "description" => $request->description,
                     "tglKeluar" => $request->tglKeluar,
                     "tglKembali" => $request->tglKembali,
@@ -78,7 +128,7 @@ class SubmissionController extends Controller
                 ]);
             } else {
                 Permission::create([
-                    "santriId" => $santri->santriId,
+                    "santriId" => $santriId,
                     "description" => $request->description,
                     "tglKeluar" => $request->tglKeluar,
                     "tglKembali" => $request->tglKembali,
@@ -102,12 +152,12 @@ class SubmissionController extends Controller
                 "bukti" => "mimes:jpg,jpeg,png",
             ]);
             $user = Auth::user();
-            $santri = Santri::find($request->santriId);
+            $santri = Santri::find($santriId);
             $permission = Permission::with([
                 "santri",
             ])->where("permissionId", $id);
 
-            $check = Permission::where("santriId", $request->santriId)
+            $check = Permission::where("santriId", $santriId)
                 ->where("tglKeluar", $request->tglKeluar)
                 ->where("permissionId", "!=", $id)
                 ->first();

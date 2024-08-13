@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Exports\SantriSecondExport;
 use App\Models\Absensi;
+use App\Models\Permission;
 use App\Models\Santri;
 use App\Models\Status;
 use Illuminate\Routing\Controller;
@@ -90,10 +91,20 @@ class MandiriController extends Controller
                     ])->first();
 
                     if ($check) {
-                        return back()->with('error', $check->santri->name . "-" . $check->description . " - " . $check->date . "  " . ', Data absensi sudah ada');
+                        continue;
                     }
 
-                    $status = Status::where("name", 'like', '%' . $value[2] . '%')->first();
+                    $permissions = Permission::where("santriId", $value[0])
+                        ->where("isComback", false)
+                        ->orderBy("permissionId", "desc")
+                        ->first();
+                    $status = [];
+
+                    if ($permissions) {
+                        $status = Status::where("statusId", 2)->first();
+                    } else {
+                        $status = Status::where("name", 'like', '%' . $value[2] . '%')->first();
+                    }
 
                     Absensi::create([
                         "santriId" => $value[0],

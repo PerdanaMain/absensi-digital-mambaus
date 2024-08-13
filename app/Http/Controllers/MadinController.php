@@ -7,6 +7,7 @@ use App\Exports\SantriExport;
 use App\Models\Absensi;
 use App\Models\Matpel;
 use App\Models\Mengikuti;
+use App\Models\Permission;
 use App\Models\Status;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -45,7 +46,9 @@ class MadinController extends Controller
             });
         }
         $matpels = $matpels->get();
-        $absensi = $absensi->get();
+        $absensi = $absensi
+            ->orderBy('absensiId', 'desc')
+            ->get();
         return view(
             'pages.absensi.madin',
             compact(
@@ -98,6 +101,7 @@ class MadinController extends Controller
                 'excelFile' => 'required|mimes:xlsx,xls',
             ]);
 
+            $count = 0;
             $file = $request->file('excelFile');
             $data = Excel::toCollection(new Absensi, $file);
 
@@ -127,10 +131,20 @@ class MadinController extends Controller
                     ])->first();
 
                     if ($check) {
-                        return back()->with('error', $check->matpel->name . "-" . $check->santri->name . " - " . $check->date . "  " . ', Data absensi sudah ada');
+                        continue;
                     }
 
-                    $status = Status::where("name", 'like', '%' . $value[2] . '%')->first();
+                    $permission = Permission::where("santriId", $value[1])
+                        ->where("isComback", false)
+                        ->orderBy("permissionId", "desc")
+                        ->first();
+                    $status = [];
+
+                    if ($permission) {
+                        $status = Status::where("statusId", 2)->first();
+                    } else {
+                        $status = Status::where("name", 'like', '%' . $value[2] . '%')->first();
+                    }
 
                     Absensi::create([
                         "matpelId" => $value[0],
@@ -139,10 +153,12 @@ class MadinController extends Controller
                         "typeId" => 2,
                         "date" => $value[3],
                     ]);
+
+                    $count++;
                 }
             }
 
-            return back()->with('success', 'Data absensi berhasil diimport');
+            return back()->with('success', $count . ' Data absensi berhasil diimport');
         } catch (\Throwable $th) {
 
             return back()->with('error', $th->getMessage());
