@@ -1,0 +1,45 @@
+name: Deploy Laravel to cPanel
+
+on:
+  push:
+    branches: [ "main" ]  # Specify the branch to deploy from
+
+jobs:
+  deploy:
+    name: Deploy to cPanel
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.2'  # Specify your PHP version here
+        extensions: mbstring, mysql
+        ini-values: post_max_size=256M, max_execution_time=300
+        coverage: none
+
+    - name: Install dependencies
+      run: composer install --prefer-dist --no-progress --no-suggest --no-interaction --optimize-autoloader --no-dev
+
+    - name: Generate .env file
+      run: |
+        cp .env.example .env
+        php artisan key:generate
+
+    - name: Build assets (if needed)
+      run: npm install && npm run production
+      # Use the above line if you have assets to build using Laravel Mix or similar tools.
+
+    - name: Deploy to cPanel
+      uses: SamKirkland/FTP-Deploy-Action@4.3.0
+      with:
+        ftp-server: ${{ secrets.FTP_HOST }}
+        ftp-username: ${{ secrets.FTP_USERNAME }}
+        ftp-password: ${{ secrets.FTP_PASSWORD }}
+        local-dir: ./  # Adjust this to the directory you want to deploy
+        server-dir: /public_html/  # Adjust this to the path on your server
+        port: ${{ secrets.FTP_PORT }}
+        log-level: verbose
