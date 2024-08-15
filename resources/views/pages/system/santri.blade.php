@@ -231,7 +231,7 @@
                                                     <p>
                                                         <b>TTL :</b>
                                                         {{ $s->birthPlace }} ,
-                                                        {{ \Carbon\Carbon::createFromFormat('Y-m-d', $s->birthDate)->format('jS F Y') }}
+                                                        {{ $s->birthDate == null ? '-' : \Carbon\Carbon::createFromFormat('Y-m-d', $s->birthDate)->format('jS F Y') }}
                                                     </p>
                                                     <p>
                                                         <b>Alamat :</b> {{ $s->address == null ? null : $s->address }}
