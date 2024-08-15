@@ -71,12 +71,13 @@ Route::prefix("/")->middleware('auth')->group(function () {
 
     Route::prefix("perizinan")->middleware("role:Admin,Pengurus")->group(function () {
         Route::get("/", [SubmissionController::class, 'index'])->name('perizinan.index');
-        Route::get("/check/{id}", [SubmissionController::class, 'check'])->name('perizinan.check');
         Route::post("/", [SubmissionController::class, 'store'])->name('perizinan.store');
         Route::put("/update-status/{id}", [SubmissionController::class, 'updateStatus'])->name('perizinan.updateStatus');
         Route::put("/{id}", [SubmissionController::class, 'update'])->name('perizinan.update');
         Route::delete("/{id}", [SubmissionController::class, 'destroy'])->name('perizinan.destroy');
     });
+
+    Route::get("perizinan/check/{id}", [SubmissionController::class, 'check'])->name('perizinan.check');
 
     /**
      * =======================================================================================================

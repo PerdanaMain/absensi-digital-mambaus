@@ -404,6 +404,7 @@
                 type: "GET",
                 url: "/perizinan/check/" + santriId,
                 success: function(res) {
+                    console.log(res);
                     $("#santri-msg").text("*" + res.message);
 
                     $("#statusId").empty();
@@ -414,6 +415,7 @@
                     });
                 },
                 error: function(err) {
+                    console.log(err);
                     $("#statusId").empty();
                     $("#statusId").append(
                         '<option selected hidden>=== Pilih Kehadiran ===</option>');
