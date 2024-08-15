@@ -51,6 +51,15 @@
 
                                 <div class="col-md-6 col-sm-12">
                                     <div class="mb-3">
+                                        <label for="flatpickr-date" class="form-label">Tanggal <span
+                                                style="color:red">*</span></label>
+                                        <input type="text" class="form-control" placeholder="YYYY-MM-DD"
+                                            id="flatpickr-date" name="tglAbsensi" />
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-sm-12">
+                                    <div class="mb-3">
                                         <label for="statusId" class="form-label">Kehadiran <span
                                                 style="color:red">*</span></label>
                                         <select name="statusId" id="statusId" class="form-select select2">
@@ -59,14 +68,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-6 col-sm-12">
-                                    <div class="mb-3">
-                                        <label for="flatpickr-date" class="form-label">Tanggal <span
-                                                style="color:red">*</span></label>
-                                        <input type="text" class="form-control" placeholder="YYYY-MM-DD"
-                                            id="flatpickr-date" name="tglAbsensi" />
-                                    </div>
-                                </div>
+
                             </div>
                             <span id="santri-msg" style="color:red;font-style:italic;"></span>
                         </div>
@@ -274,6 +276,16 @@
 
                                                 <div class="col-md-6 col-sm-12">
                                                     <div class="mb-3">
+                                                        <label for="flatpickr-date" class="form-label">Tanggal <span
+                                                                style="color:red">*</span></label>
+                                                        <input type="text" class="form-control"
+                                                            placeholder="YYYY-MM-DD" id="flatpickr-date"
+                                                            name="tglAbsensi" value="{{ $a->date }}" />
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-6 col-sm-12">
+                                                    <div class="mb-3">
                                                         <label for="statusId" class="form-label">Kehadiran <span
                                                                 style="color:red">*</span></label>
                                                         <select name="statusId" id="statusId" class="form-select">
@@ -285,16 +297,6 @@
                                                                 </option>
                                                             @endforeach
                                                         </select>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-md-6 col-sm-12">
-                                                    <div class="mb-3">
-                                                        <label for="flatpickr-date" class="form-label">Tanggal <span
-                                                                style="color:red">*</span></label>
-                                                        <input type="text" class="form-control"
-                                                            placeholder="YYYY-MM-DD" id="flatpickr-date"
-                                                            name="tglAbsensi" value="{{ $a->date }}" />
                                                     </div>
                                                 </div>
 
