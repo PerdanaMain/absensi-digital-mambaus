@@ -67,14 +67,14 @@ class SantriController extends Controller
                         'username' => 'unique:users,username',
                     ])->validate();
 
+                    $pengurus = Pengurus::where('name', 'like', '%' . $value[5] . '%')->first();
+
                     $user = User::create([
                         'username' => $value[9],
                         "image" => null,
                         'password' => Hash::make('12345'),
                         'roleId' => 4,
                     ]);
-
-                    $pengurus = Pengurus::where('name', 'like', '%' . $value[5] . '%')->first();
 
                     $wali = Wali::create([
                         'name' => $value[6],

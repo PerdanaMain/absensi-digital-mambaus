@@ -27,7 +27,7 @@ class RekapIzinController extends Controller
 
         if ($user->roleId == 3) {
             $santri = $santri->where("pengurusId", $user->pengurus->pengurusId);
-            $permissions = $permission->whereHas("santri", function ($query) use ($user) {
+            $permissions = $permissions->whereHas("santri", function ($query) use ($user) {
                 $query->where("pengurusId", $user->pengurus->pengurusId);
             });
         }
