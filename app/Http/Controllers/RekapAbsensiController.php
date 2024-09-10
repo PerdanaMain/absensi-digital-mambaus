@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Exports\AbsensiExport;
 use App\Models\Absensi;
+use App\Models\Matpel;
 use Maatwebsite\Excel\Facades\Excel;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -12,6 +13,11 @@ class RekapAbsensiController extends Controller
     public function index()
     {
         $user = auth()->user();
+        $matpel = Matpel::with([
+            "guru",
+            "kelas",
+            "type",
+        ]);
         $absensi = Absensi::with([
             "santri" => [
                 "wali",
@@ -28,9 +34,17 @@ class RekapAbsensiController extends Controller
             $absensi = $absensi->whereHas("matpel", function ($query) use ($user) {
                 $query->where("guruId", $user->guru->guruId);
             });
+
+            $matpel = $matpel->where("guruId", $user->guru->guruId);
         } else if ($user->roleId == 4) {
             $absensi = $absensi->whereHas("santri", function ($query) use ($user) {
                 $query->where("waliId", $user->wali->waliId);
+            });
+
+            $matpel = $matpel->whereHas("absensi", function ($query) use ($user) {
+                $query->whereHas("santri", function ($query) use ($user) {
+                    $query->where("waliId", $user->wali->waliId);
+                });
             });
         }
 
@@ -38,10 +52,13 @@ class RekapAbsensiController extends Controller
             ->orderBy('date', 'desc')
             ->get();
 
+        $matpel = $matpel->get();
+
         return view(
             'pages.rekap.absensi',
             compact(
-                'absensi'
+                'absensi',
+                "matpel"
             )
         );
     }
@@ -54,6 +71,8 @@ class RekapAbsensiController extends Controller
             ]);
             $user = auth()->user();
             $format = (int) $request->format;
+            $matpel = $request->matpel_id != null ? (int) $request->matpel_id : null;
+
             $absensi = Absensi::with([
                 "santri" => [
                     "wali",
@@ -74,6 +93,10 @@ class RekapAbsensiController extends Controller
                 $absensi = $absensi->whereHas("santri", function ($query) use ($user) {
                     $query->where("waliId", $user->wali->waliId);
                 });
+            }
+
+            if ($matpel != null) {
+                $absensi = $absensi->where("matpelId", $matpel);
             }
 
             if ($request->tglMulai != null && $request->tglAkhir != null) {

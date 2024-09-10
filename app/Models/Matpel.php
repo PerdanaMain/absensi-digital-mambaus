@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Matpel extends Model
@@ -38,5 +39,9 @@ class Matpel extends Model
     public function kelas(): BelongsTo
     {
         return $this->belongsTo(Kelas::class, 'kelasId', 'kelasId');
+    }
+    public function absensi(): HasMany
+    {
+        return $this->hasMany(Absensi::class, 'matpelId', 'matpelId');
     }
 }

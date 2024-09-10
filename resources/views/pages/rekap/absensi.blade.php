@@ -39,6 +39,19 @@
                                     </div>
                                 </div>
 
+                                <div class="col-md-12 col-sm-12" id="exportMatpel">
+                                    <div class="mb-3">
+                                        <label for="tglAkhir" class="form-label">Pilih Mata Pelajaran</label>
+                                        <select name="matpel_id" id="matpel_id" class="form-control">
+                                            <option value=null>=== Pilih Matpel ====</option>
+                                            <option value="0">Semua Mata Pelajaran</option>
+                                            @foreach ($matpel as $m)
+                                                <option value="{{ $m->matpelId }}">{{ $m->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+
                                 <div class="col-md-12 col-sm-12">
                                     <div class="mb-3">
                                         <label for="name" class="form-label">Format<span
