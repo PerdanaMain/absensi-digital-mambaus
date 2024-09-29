@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Absensi;
 use App\Models\Guru;
+use App\Models\Matpel;
+use App\Models\Mengikuti;
 use App\Models\Pengurus;
 use App\Models\Permission;
 use App\Models\Santri;
@@ -98,6 +100,27 @@ class DashboardController extends Controller
             ];
         }
 
+        // for dashboard guru
+        $matpelGuru = [];
+        $santriGuru = [];
+        $monthlyReport = [];
+
+        if ($user->roleId == 2) {
+            $matpelGuru = Matpel::with([
+                "guru",
+            ])->where('guruId', $user->guru->guruId)->get();
+
+            $santriGuru = Mengikuti::with([
+                "matpel" => [
+                    "guru",
+                ],
+            ])->whereIn('matpelId', $matpelGuru->pluck("matpelId")->toArray())->get();
+
+            $monthlyReport = absensi::whereIn('matpelId', $matpelGuru->pluck("matpelId")->toArray())
+                ->whereMonth('created_at', Carbon::now()->month)
+                ->get();
+        }
+
         return view(
             'pages.dashboard',
             compact(
@@ -116,7 +139,10 @@ class DashboardController extends Controller
                 "santri",
                 "sekolahInfo",
                 "madinInfo",
-                "mandiriInfo"
+                "mandiriInfo",
+                "matpelGuru",
+                "santriGuru",
+                "monthlyReport"
             )
         );
     }

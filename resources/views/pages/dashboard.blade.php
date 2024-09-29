@@ -5,8 +5,18 @@
 @section('content')
     @if (Auth::user()->roleId == 4)
         @include('components.userDashboard')
-    @else
+    @endif
+
+    @if (Auth::user()->roleId == 1)
         @include('components.adminDashboard')
+    @endif
+
+    @if (Auth::user()->roleId == 3)
+        @include('components.pengurusDashboard')
+    @endif
+
+    @if (Auth::user()->roleId == 2)
+        @include('components.guruDashboard')
     @endif
 @endsection
 
