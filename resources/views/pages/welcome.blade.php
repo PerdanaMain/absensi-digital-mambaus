@@ -36,7 +36,7 @@
                         <img src="{{ url('assets/img/logo-pondok-2.png') }}" alt="Logo Pondok"
                             style="margin: 10px 0px 10px 10px; max-height:90px">
                     </div>
-                    <p> Untuk keperluan Absensi dan Perizinan Santri PP Mambaus Sholihin Al Baiad</p>
+                    <p> Untuk keperluan Absensi dan Perizinan Santri PP Al Baiad</p>
                 </div>
             </div>
         </div>
