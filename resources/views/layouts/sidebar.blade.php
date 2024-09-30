@@ -4,8 +4,8 @@
             <span class="app-brand-logo demo">
                 <img src="{{ url('assets/img/logo-pondok.png') }}" alt="Logo Pondok" style="max-height: 25px; ;">
             </span>
-            <span class="app-brand-text demo menu-text fw-bold" style="font-size: 15px; ">PP. Mamba'us
-                <br>Sholihin 2</span>
+            <span class="app-brand-text demo menu-text fw-bold" style="font-size: 15px; ">Pondok Pesantren
+                <br>Al Baiad</span>
         </a>
 
         <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto">

@@ -30,10 +30,13 @@
             <div class="toggle">
                 <div class="toggle-panel toggle-right">
                     <h1>Aplikasi Absensi Santri</h1>
-                    <img src="{{ url('assets/img/logo-pondok.png') }}" alt="Logo Pondok"
-                        style="margin: 10px 0px 10px 0px; max-height:100px">
-                    <p> Untuk keperluan Absensi dan Perizinan Santri PP Mambaus Sholihin 2
-                        Blitar</p>
+                    <div class="d-block">
+                        <img src="{{ url('assets/img/logo-pondok.png') }}" alt="Logo Pondok"
+                            style="margin: 10px 0px 10px 0px; max-height:100px">
+                        <img src="{{ url('assets/img/logo-pondok-2.png') }}" alt="Logo Pondok"
+                            style="margin: 10px 0px 10px 10px; max-height:90px">
+                    </div>
+                    <p> Untuk keperluan Absensi dan Perizinan Santri PP Mambaus Sholihin Al Baiad</p>
                 </div>
             </div>
         </div>
