@@ -210,3 +210,30 @@ body {
 .container.active .toggle-right {
     transform: translateX(200%);
 }
+
+@media screen and (max-width: 378px) {
+    .toggle-right h1 {
+        font-size: 20px;
+    }
+
+    .toggle-right .d-block img {
+        max-width: 40px;
+    }
+
+    .toggle-right p {
+        font-size: 12px;
+    }
+}
+@media screen and (max-width: 496px) {
+    .toggle-right h1 {
+        font-size: 30px;
+    }
+
+    .toggle-right .d-block img {
+        max-width: 50px;
+    }
+
+    .toggle-right p {
+        font-size: 17px;
+    }
+}
